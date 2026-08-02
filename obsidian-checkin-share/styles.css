@@ -1,0 +1,525 @@
+/* ============================================================
+   循星台 · 打卡分享（Obsidian 插件）
+   含：分享卡样式（.share-card / .sc-*，移植自桌面端）
+       弹窗控件样式（.sx-*）
+   ============================================================ */
+
+/* ---------- 弹窗容器（覆盖 Obsidian 默认 content 内边距） ---------- */
+.sx-modal {
+  padding: 0 !important;
+}
+.sx-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border-bottom: 1px solid rgba(150, 128, 90, 0.22);
+}
+.sx-modal-title {
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: var(--text-normal);
+}
+.sx-modal-close {
+  font-size: 20px;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.sx-modal-close:hover {
+  background: rgba(200, 155, 60, 0.14);
+  color: var(--text-normal);
+}
+.sx-modal-body {
+  padding: 20px 22px;
+  overflow-y: auto;
+}
+
+/* ---------- 里程碑录入字段 ---------- */
+.sx-field {
+  margin-bottom: 16px;
+}
+.sx-label {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.sx-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  color: var(--text-normal);
+  font-size: 14px;
+  box-sizing: border-box;
+}
+.sx-input:focus {
+  outline: none;
+  border-color: #c89b3c;
+}
+.sx-type-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.sx-type-btn {
+  flex: 1;
+  min-width: 64px;
+  padding: 10px 6px;
+  border-radius: 11px;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  color: var(--text-muted);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.16s;
+}
+.sx-type-btn .t-cn {
+  font-size: 14px;
+  color: var(--text-normal);
+}
+.sx-type-btn .t-en {
+  display: block;
+  font-size: 9px;
+  letter-spacing: 2px;
+  margin-top: 3px;
+  font-family: "Times New Roman", serif;
+  color: var(--text-muted);
+}
+.sx-type-btn.active {
+  border-color: #c89b3c;
+  background: rgba(200, 155, 60, 0.14);
+}
+.sx-type-btn.active .t-cn {
+  color: #9a7320;
+}
+.sx-seq-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.sx-seq-row .sx-input {
+  width: 100px;
+}
+.sx-seq-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ---------- 比例预设 ---------- */
+.sx-ratio-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.sx-ratio-btn {
+  flex: 1;
+  padding: 12px 8px;
+  border-radius: 12px;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  color: var(--text-muted);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.16s;
+}
+.sx-ratio-btn .r-label {
+  font-size: 14px;
+  color: var(--text-normal);
+}
+.sx-ratio-btn .r-ratio {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  font-family: "Times New Roman", serif;
+}
+.sx-ratio-btn.active {
+  border-color: #c89b3c;
+  background: rgba(200, 155, 60, 0.14);
+}
+.sx-ratio-btn.active .r-label {
+  color: #9a7320;
+}
+
+/* ---------- 主题切换 ---------- */
+.sx-theme-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.sx-theme-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+  border-radius: 11px;
+  cursor: pointer;
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  color: var(--text-muted);
+  font-size: 13px;
+  transition: all 0.16s;
+}
+.sx-theme-swatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+}
+.sx-theme-btn.active {
+  border-color: #c89b3c;
+  background: rgba(200, 155, 60, 0.14);
+  color: #9a7320;
+}
+.sx-theme-dice {
+  margin-left: auto;
+  font-size: 13px;
+}
+.sx-theme-dice:hover {
+  border-color: #c89b3c;
+  color: #9a7320;
+}
+
+/* ---------- 预览 ---------- */
+.sx-preview-wrap {
+  display: flex;
+  justify-content: center;
+  background: rgba(200, 155, 60, 0.06);
+  border-radius: 14px;
+  padding: 18px;
+  overflow: auto;
+  margin-bottom: 16px;
+}
+.sx-preview-inner {
+  position: relative;
+}
+
+/* ---------- 按钮 ---------- */
+.sx-copy-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: #fffaf0;
+  background: linear-gradient(135deg, #d8b25e, #c89b3c 55%, #b8862d);
+  box-shadow: 0 10px 26px rgba(200, 155, 60, 0.32);
+  transition: transform 0.16s;
+}
+.sx-copy-btn:hover {
+  transform: translateY(-2px);
+}
+.sx-copy-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+.sx-save-btn {
+  margin-top: 12px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: var(--text-normal);
+  background: var(--background-secondary);
+  border: 1px solid var(--background-modifier-border);
+  transition: all 0.16s;
+}
+.sx-save-btn:hover {
+  border-color: #c89b3c;
+  color: #9a7320;
+  background: rgba(200, 155, 60, 0.1);
+}
+.sx-save-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+   分享卡（用于截图，固定像素尺寸 · 双主色 · 极简高级）
+   以下移植自桌面端 checkin.css，确保导出图与桌面端一致。
+   ============================================================ */
+.share-card {
+  position: relative;
+  overflow: hidden;
+  color: var(--sc-ink, #463d31);
+  font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  background: var(--sc-bg);
+  box-shadow: inset 0 0 160px rgba(0, 0, 0, 0.05);
+}
+
+/* 自设计大图案水印：单张「星盘·北斗」居中铺底 */
+.share-card .sc-pattern-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image: var(--sc-pattern);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 92% auto;
+  opacity: 0.13;
+}
+
+/* 细噪点颗粒层 */
+.share-card .sc-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: var(--sc-bg-noise);
+  background-size: 200px 200px;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}
+
+/* 中央柔光 */
+.share-card .sc-glow-center {
+  position: absolute;
+  width: 78%;
+  height: 78%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  opacity: 0.7;
+  z-index: 0;
+}
+.share-card .sc-glow-edge {
+  position: absolute;
+  width: 38%;
+  height: 38%;
+  border-radius: 50%;
+  filter: blur(55px);
+  pointer-events: none;
+  opacity: 0.3;
+  z-index: 0;
+}
+
+/* 内容层 */
+.share-card .sc-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  padding: 8.5% 8%;
+  box-sizing: border-box;
+}
+
+.share-card .sc-head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: calc(15px * var(--sc-k, 1));
+  border-bottom: 1px solid var(--sc-line, rgba(150, 128, 90, 0.3));
+}
+.share-card .sc-brand {
+  font-family: "Songti SC", "STSong", "Source Han Serif SC", "Times New Roman", serif;
+  font-weight: 700;
+  font-size: calc(31px * var(--sc-k, 1));
+  letter-spacing: 4px;
+  background: var(--sc-foil);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: baseline;
+  gap: calc(11px * var(--sc-k, 1));
+}
+.share-card .sc-brand small {
+  font-family: "Times New Roman", serif;
+  font-size: calc(11px * var(--sc-k, 1));
+  letter-spacing: 4px;
+  color: var(--sc-faint, #b3a892);
+  -webkit-text-fill-color: initial;
+}
+.share-card .sc-anchor {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: calc(3px * var(--sc-k, 1));
+}
+.share-card .sc-anchor-cn {
+  font-size: calc(15px * var(--sc-k, 1));
+  letter-spacing: 1px;
+  color: var(--sc-dim, #8a7f6b);
+  white-space: nowrap;
+}
+.share-card .sc-anchor-en {
+  font-family: "Times New Roman", serif;
+  font-size: calc(9.5px * var(--sc-k, 1));
+  letter-spacing: 3px;
+  color: var(--sc-faint, #b3a892);
+}
+
+/* 中央焦点：里程碑脉冲（类型徽章 + 标题 + 一句话） */
+.share-card .sc-focus-ms {
+  flex: 1 1 auto;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: calc(26px * var(--sc-k, 1));
+  padding: calc(20px * var(--sc-k, 1)) 2%;
+}
+.share-card .sc-ms-type {
+  display: inline-flex;
+  align-items: baseline;
+  gap: calc(10px * var(--sc-k, 1));
+  font-family: "Songti SC", "STSong", "Source Han Serif SC", serif;
+  font-size: calc(26px * var(--sc-k, 1));
+  letter-spacing: 6px;
+  color: var(--sc-ink, #463d31);
+}
+.share-card .sc-ms-glyph {
+  font-size: calc(20px * var(--sc-k, 1));
+  background: var(--sc-foil);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.share-card .sc-ms-type em {
+  font-style: normal;
+  font-family: "Times New Roman", serif;
+  font-size: calc(11px * var(--sc-k, 1));
+  letter-spacing: 4px;
+  color: var(--sc-faint, #b3a892);
+}
+.share-card .sc-ms-title {
+  font-family: "Songti SC", "STSong", "Source Han Serif SC", "Times New Roman", serif;
+  font-weight: 700;
+  font-size: var(--sc-title, calc(74px * var(--sc-k, 1)));
+  line-height: 1.28;
+  letter-spacing: 2px;
+  max-width: 100%;
+  background: var(--sc-foil);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 6px 22px rgba(0, 0, 0, 0.14));
+}
+.share-card .sc-ms-sub {
+  font-family: "Songti SC", "STSong", "Source Han Serif SC", serif;
+  font-size: calc(22px * var(--sc-k, 1));
+  line-height: 1.6;
+  letter-spacing: 1px;
+  color: var(--sc-dim, #8a7f6b);
+  max-width: 84%;
+}
+.share-card .sc-ms-rule {
+  margin-top: calc(6px * var(--sc-k, 1));
+  width: calc(64px * var(--sc-k, 1));
+  height: calc(3px * var(--sc-k, 1));
+  border-radius: 3px;
+  background: var(--sc-foil);
+  opacity: 0.85;
+}
+
+/* 底部页脚 */
+.share-card .sc-foot {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  padding-top: calc(18px * var(--sc-k, 1));
+}
+.share-card .sc-quote-col {
+  display: flex;
+  flex-direction: column;
+  gap: calc(11px * var(--sc-k, 1));
+  max-width: 66%;
+}
+.share-card .sc-quote {
+  font-family: "Songti SC", "STSong", "Source Han Serif SC", serif;
+  font-size: calc(24px * var(--sc-k, 1));
+  line-height: 1.55;
+  color: var(--sc-ink, #463d31);
+  opacity: 0.92;
+}
+.share-card .sc-imagery {
+  font-size: calc(12px * var(--sc-k, 1));
+  letter-spacing: 3px;
+  color: var(--sc-dim, #8a7f6b);
+  padding-left: 2px;
+}
+.share-card .sc-foot-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: calc(14px * var(--sc-k, 1));
+  flex-shrink: 0;
+}
+.share-card .sc-date {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: calc(2px * var(--sc-k, 1));
+  text-align: right;
+  font-family: "Times New Roman", serif;
+  line-height: 1.15;
+}
+.share-card .sc-date b {
+  font-size: calc(25px * var(--sc-k, 1));
+  color: var(--sc-ink, #463d31);
+  letter-spacing: 1px;
+}
+.share-card .sc-date-cn {
+  font-size: calc(13px * var(--sc-k, 1));
+  letter-spacing: 2px;
+  color: var(--sc-dim, #8a7f6b);
+  font-family: "PingFang SC", sans-serif;
+}
+.share-card .sc-date-en {
+  font-size: calc(9.5px * var(--sc-k, 1));
+  letter-spacing: 3px;
+  color: var(--sc-faint, #b3a892);
+}
+.share-card .sc-seal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: calc(72px * var(--sc-k, 1));
+  height: calc(72px * var(--sc-k, 1));
+  border-radius: calc(10px * var(--sc-k, 1));
+  background: var(--sc-seal-bg, #b08a3c);
+  color: var(--sc-seal-ink, #f6f0e3);
+  font-family: "Songti SC", "STSong", "Source Han Serif SC", serif;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  transform: rotate(-4deg);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+}
+.share-card .sc-seal span {
+  font-size: calc(16px * var(--sc-k, 1));
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.share-card .sc-seal em {
+  font-style: normal;
+  font-size: calc(10.5px * var(--sc-k, 1));
+  letter-spacing: 4px;
+  margin-top: 2px;
+  opacity: 0.9;
+}

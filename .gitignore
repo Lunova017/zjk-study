@@ -1,0 +1,35 @@
+﻿# ===== Quartz 构建产物 & 依赖 =====
+/public/
+.quartz-cache/
+node_modules/
+
+# Quartz 框架源码现在随仓库提交（标准用法，CI 直接 npx quartz build）
+/_qz/
+/build/
+
+# ===== 系统 / 编辑器 =====
+.obsidian/
+.trae/
+help/
+.codebuddy/
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+*.err
+
+# 临时目录
+temp/
+
+# 数据库
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# 编辑器本地配置（防御性忽略）
+git-config.json
+
+# 个人私有静态资源（Obsidian 本地引用，含打卡插件导出的里程碑图，仅本机查看）
+/attachments/

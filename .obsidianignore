@@ -1,0 +1,12 @@
+.*
+node_modules/
+public/
+quartz/
+obsidian-checkin-share/
+attachments/
+package.json
+package-lock.json
+tsconfig.json
+globals.d.ts
+index.d.ts
+LICENSE

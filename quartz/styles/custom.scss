@@ -1,0 +1,148 @@
+@use "./base.scss";
+
+/* ============================================================
+   循星台 · 自定义样式
+   Derek Sivers 式安静单栏 + Solarized 质感
+   注意：源文件在仓库根 custom.scss；构建前须复制到
+   quartz/styles/custom.scss 才生效（见 README / CI 构建命令）。
+   ============================================================ */
+
+$sivers-width: 720px;
+
+/* ---------- 单栏收拢：去除左右侧栏，正文居中约 720px ---------- */
+.page > #quartz-body {
+  grid-template-columns: auto !important;
+  grid-template-areas:
+    "page-header"
+    "page-center"
+    "page-footer" !important;
+  max-width: $sivers-width;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+
+  & .sidebar {
+    display: none !important;
+  }
+
+  & .center {
+    width: 100%;
+    max-width: $sivers-width;
+    margin: 0 auto;
+  }
+}
+
+/* ---------- 顶栏：站名居左，搜索 / 暗色切换居右 ----------
+   注意：HTML 结构为 .page-header > header > (page-title / search / darkmode)，
+   三个组件都在 <header> 内部，故 flex 必须加在 <header> 上。 */
+.page > #quartz-body .page-header {
+  margin-top: 2.5rem;
+
+  & > header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  & .page-title {
+    margin: 0 auto 0 0;
+    font-size: 1.15rem;
+    letter-spacing: 2px;
+  }
+  & .page-title a {
+    color: var(--dark);
+  }
+}
+
+/* ---------- 普通文章/栏目页标题：克制中号，不与着陆页 hero 抢视觉 ---------- */
+.article-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* ---------- 非着陆页：隐藏顶栏 <header>（站名+搜索+暗色），保留 .popover-hint 内面包屑与标题 ----------
+   必须用 !important：全局 .page>#quartz-body .page-header>header 含 id 选择器，
+   优先级压过本规则，否则 display:flex 胜出导致顶栏不隐藏。 */
+body:not([data-slug="index"]) .page-header > header {
+  display: none !important;
+}
+
+/* ---------- 着陆页：大号 hero 标题；隐藏顶栏小站名与元信息避免重复 ---------- */
+body[data-slug="index"] .page-header .page-title {
+  display: none;
+}
+body[data-slug="index"] .page-header > header {
+  justify-content: flex-end;
+}
+body[data-slug="index"] .article-title {
+  display: block;
+  font-size: 2.8rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  margin: 1.5rem 0 0.5rem;
+}
+body[data-slug="index"] .content-meta {
+  display: none;
+}
+body[data-slug="index"] .breadcrumb-container {
+  display: none;
+}
+
+/* ---------- 正文排版：衬线长文的呼吸感 ---------- */
+.center {
+  line-height: 1.75;
+}
+article {
+  & p,
+  & li {
+    line-height: 1.85;
+  }
+  & > h1:first-of-type {
+    margin-top: 0.5rem;
+  }
+}
+
+/* 链接下划线克制处理：仅悬停显现 */
+article a.external,
+article p a,
+article li a {
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+/* 引用块更安静 */
+blockquote {
+  color: var(--gray);
+  font-style: italic;
+}
+
+/* 分隔线更细 */
+hr {
+  margin: 3rem auto;
+}
+
+/* 页脚区留白（虽为空组件，保持底部呼吸） */
+.page-footer {
+  margin-bottom: 4rem;
+}
+
+/* 首页 / 列表页文章标题弱化装饰 */
+.page > #quartz-body .center > article > h1 {
+  letter-spacing: 1px;
+}
+
+/* 代码块圆角与配色沿用 Solarized（syntax 已处理） */
+pre {
+  border-radius: 8px;
+}
+
+/* 移动端进一步收窄内边距 */
+@media all and (max-width: 800px) {
+  .page > #quartz-body {
+    padding: 0 1.1rem;
+  }
+  .page > #quartz-body .page-header {
+    margin-top: 1.5rem;
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "id": "cirast-checkin",
+  "name": "循星台 · 里程碑脉冲",
+  "version": "2.0.0",
+  "minAppVersion": "1.4.0",
+  "description": "告别每日打卡。录入里程碑（突破/顿悟/过关/决策），生成「米白金」风格成果脉冲卡，一键复制到剪贴板或导出到库。节奏由认知决定，不由日历决定。",
+  "author": "cirast",
+  "isDesktopOnly": false
+}
